@@ -1,0 +1,10 @@
+    "leetcode.filePath": {
+        "default": {
+            "folder": "",
+            "filename": "${id}.${kebab-case-name}.${ext}"
+        },
+        "golang": {
+            "folder": "p${id}",
+            "filename": "${kebab-case-name}.${ext}"
+        }
+    }
