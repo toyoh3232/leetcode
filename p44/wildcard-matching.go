@@ -9,14 +9,69 @@ import "strings"
  */
 
 // Test ...
-func Test() string {
-	//	s := "abbabaaabbabbaababbabbbbbabbbabbbabaaaaababababbbabababaabbababaabbbbbbaaaabababbbaabbbbaabbbbababababbaabbaababaabbbababababbbbaaabbbbbabaaaabbababbbbaababaabbababbbbbababbbabaaaaaaaabbbbbaabaaababaaaabb"
-	p := "**aa*****ba*a*bb**aa*ab****a*aaaaaa***a*aaaa**bbabb*b*b**aaaaaaaaa*a********ba*bbb***a*ba*bb*bb**a*b*bb"
-	return rub(p)
+func Test() bool {
+	s := "mississippi"
+	p := "m*issip*"
+	return isMatch(s, p)
 }
 
 // @lc code=start
+
+//Krauss's way
 func isMatch(s string, p string) bool {
+	s, p = rub(s), rub(p)
+	wd, pr := false, ""
+	wdn, sn := false, ""
+	for len(s) >= 0 {
+		if p == "*" {
+			return true
+		}
+		if len(s) == 0 && len(p) == 0 {
+			return true
+		}
+		if (len(s) > 0 && p == "" && !wd) || (len(s) == 0 && len(p) >= 1) {
+			return false
+		}
+
+		if wd && !wdn && s[0] == pr[0] {
+			sn = s[0:]
+			wdn = true
+		}
+
+		if p == "" && wd {
+			p = pr
+			continue
+		} else if s[0] != p[0] {
+			if p[0] == '*' {
+				wd, pr = true, p[1:]
+				p = pr
+				continue
+			}
+			if p[0] == '?' {
+				s, p = s[1:], p[1:]
+				continue
+			}
+			if !wd {
+				return false
+			}
+			if p != pr {
+				p = pr
+			} else if wdn {
+				s, p = sn, pr
+				wdn = false
+			}
+			continue
+		} else {
+			s, p = s[1:], p[1:]
+		}
+
+	}
+
+	return true
+}
+
+//recursive way
+func isMatch2(s string, p string) bool {
 	p = rub(p)
 	if s == "" && p == "" {
 		return true
