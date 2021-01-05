@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	p "leetcode/p41"
+	p "leetcode/p44"
 )
 
 func main() {

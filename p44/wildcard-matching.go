@@ -1,6 +1,9 @@
 package p44
 
-import "strings"
+import (
+	"fmt"
+	"leetcode/automata"
+)
 
 /*
  * @lc app=leetcode id=44 lang=golang
@@ -10,8 +13,8 @@ import "strings"
 
 // Test ...
 func Test() bool {
-	s := "mississippi"
-	p := "m*issip*"
+	s := "abba"
+	p := "abba"
 	return isMatch(s, p)
 }
 
@@ -19,99 +22,33 @@ func Test() bool {
 
 //Krauss's way
 func isMatch(s string, p string) bool {
-	s, p = rub(s), rub(p)
-	wd, pr := false, ""
-	wdn, sn := false, ""
-	for len(s) >= 0 {
-		if p == "*" {
-			return true
-		}
-		if len(s) == 0 && len(p) == 0 {
-			return true
-		}
-		if (len(s) > 0 && p == "" && !wd) || (len(s) == 0 && len(p) >= 1) {
-			return false
-		}
-
-		if wd && !wdn && s[0] == pr[0] {
-			sn = s[0:]
-			wdn = true
-		}
-
-		if p == "" && wd {
-			p = pr
-			continue
-		} else if s[0] != p[0] {
-			if p[0] == '*' {
-				wd, pr = true, p[1:]
-				p = pr
-				continue
-			}
-			if p[0] == '?' {
-				s, p = s[1:], p[1:]
-				continue
-			}
-			if !wd {
-				return false
-			}
-			if p != pr {
-				p = pr
-			} else if wdn {
-				s, p = sn, pr
-				wdn = false
-			}
-			continue
-		} else {
-			s, p = s[1:], p[1:]
-		}
-
-	}
-
-	return true
+	nfa := automata.NewNFA("1", "2")
+	nfa.Add("1", 'a', "2")
+	fmt.Println(nfa.String())
+	dfa := nfa.Compile()
+	return dfa.Execute(("a"))
 }
 
-//recursive way
-func isMatch2(s string, p string) bool {
-	p = rub(p)
-	if s == "" && p == "" {
-		return true
-	}
-	if len(p) > 0 {
-		switch p[0] {
-		case '?':
-			if len(s) > 0 {
-				return isMatch(s[1:], p[1:])
-			}
-			break
-		case '*':
-			for i := 0; i <= len(s); i++ {
-				if isMatch(s[i:], p[1:]) {
-					return true
-				}
-			}
-			break
-		default:
-			if len(s) > 0 && s[0] == p[0] {
-				return isMatch(s[1:], p[1:])
-			}
-			break
+func nub(p string) string {
+	var ns []byte
+	for i := 0; i < len(p); i++ {
+		if i+1 < len(p) && p[i] == '*' && p[i+1] == '*' {
+			continue
 		}
+		ns = append(ns, p[i])
 	}
-	return false
+	return string(ns)
 }
 
-func rub(s string) string {
-	var sb strings.Builder
-
-	for i := 0; i < len(s); i++ {
-		if s[i] == '*' {
-			if i+1 < len(s) && s[i+1] == '*' {
-				continue
-			}
+func lenP(p string) int {
+	i := 0
+	for _, v := range p {
+		if v == '*' {
+			continue
 		}
-		sb.WriteByte(s[i])
+		i++
 	}
-	return sb.String()
+	return i
 }
 
 // @lc code=end
