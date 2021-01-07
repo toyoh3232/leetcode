@@ -22,11 +22,12 @@ func Test() bool {
 
 //Krauss's way
 func isMatch(s string, p string) bool {
-	nfa := automata.NewNFA("1", "2")
-	nfa.Add("1", 'a', "2")
-	fmt.Println(nfa.String())
-	dfa := nfa.Compile()
-	return dfa.Execute(("a"))
+	nfa := automata.NewNFA("0", "2")
+	nfa.AddTrasition("0", 'a', "0")
+	nfa.AddTrasition("0", 'b', "1")
+	nfa.AddTrasition("1", 'b', "2")
+	fmt.Println(nfa.Discription())
+	return false
 }
 
 func nub(p string) string {
