@@ -1,10 +1,5 @@
 package p44
 
-import (
-	"fmt"
-	"leetcode/automata"
-)
-
 /*
  * @lc app=leetcode id=44 lang=golang
  *
@@ -13,43 +8,35 @@ import (
 
 // Test ...
 func Test() bool {
-	s := "abba"
-	p := "abba"
+	s := "abcabczzzde"
+	p := "*abc???de*"
 	return isMatch(s, p)
 }
 
 // @lc code=start
-
-//Krauss's way
 func isMatch(s string, p string) bool {
-	nfa := automata.NewNFA("0", "2")
-	nfa.AddTrasition("0", 'a', "0")
-	nfa.AddTrasition("0", 'b', "1")
-	nfa.AddTrasition("1", 'b', "2")
-	fmt.Println(nfa.Discription())
-	return false
-}
-
-func nub(p string) string {
-	var ns []byte
-	for i := 0; i < len(p); i++ {
-		if i+1 < len(p) && p[i] == '*' && p[i+1] == '*' {
-			continue
-		}
-		ns = append(ns, p[i])
+	lenY, lenX := len(s)+1, len(p)+1
+	dp := make([][]bool, lenY)
+	for y := 0; y < lenY; y++ {
+		dp[y] = make([]bool, lenX)
 	}
-	return string(ns)
-}
-
-func lenP(p string) int {
-	i := 0
-	for _, v := range p {
-		if v == '*' {
-			continue
+	dp[0][0] = true
+	for x := 1; x < lenX; x++ {
+		if p[x-1] == '*' {
+			dp[0][x] = dp[0][x-1]
 		}
-		i++
 	}
-	return i
+	for y := 1; y < lenY; y++ {
+		for x := 1; x < lenX; x++ {
+			switch p[x-1] {
+			case '*':
+				dp[y][x] = dp[y][x-1] || dp[y-1][x]
+			case '?', s[y-1]:
+				dp[y][x] = dp[y-1][x-1]
+			}
+		}
+	}
+	return dp[len(s)][len(p)]
 }
 
 // @lc code=end
