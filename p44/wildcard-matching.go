@@ -8,12 +8,14 @@ package p44
 
 // Test ...
 func Test() bool {
-	s := "abcabczzzde"
-	p := "*abc???de*"
+	s := "abba"
+	p := "abba"
 	return isMatch(s, p)
 }
 
 // @lc code=start
+
+//Krauss's way
 func isMatch(s string, p string) bool {
 	lenY, lenX := len(s)+1, len(p)+1
 	dp := make([][]bool, lenY)
