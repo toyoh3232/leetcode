@@ -7,13 +7,19 @@ package p54
  */
 
 // Test ...
-func Test() [][]int {
-	return next([][]int{{0, 0}}, 4, 3, 3)
+func Test() []int {
+	a := [][]int{{1, 2}}
+	return spiralOrder(a)
 }
 
 // @lc code=start
 func spiralOrder(matrix [][]int) []int {
-	return []int{}
+	position := next([][]int{{0, 0}}, 4, len(matrix), len(matrix[0]))
+	r := []int{}
+	for _, v := range position {
+		r = append(r, matrix[v[0]][v[1]])
+	}
+	return r
 }
 
 func next(visited [][]int, direction, rows, cols int) [][]int {
@@ -22,7 +28,7 @@ func next(visited [][]int, direction, rows, cols int) [][]int {
 		return visited
 	}
 
-	current := visited[0]
+	current := visited[len(visited)-1]
 	i, j := current[0], current[1]
 	ni, nj := i, j
 	// south:1, west:2,north:3, east:4
@@ -41,27 +47,23 @@ func next(visited [][]int, direction, rows, cols int) [][]int {
 		break
 	}
 
-	if has(visited, ni, nj) || ni == rows || nj == cols {
+	if has(visited, ni, nj) || ni == rows || nj == cols || ni < 0 || nj < 0 {
 		// turn
 		// south:1, west:2,north:3, east:4
 		switch direction {
 		case 4:
-			visited = next(visited, 1, rows, cols)
-			break
+			direction = 1
 		case 1:
-			visited = next(visited, 2, rows, cols)
-			break
+			direction = 2
 		case 2:
-			visited = next(visited, 3, rows, cols)
-			break
+			direction = 3
 		case 3:
-			visited = next(visited, 4, rows, cols)
-			break
+			direction = 4
 		}
 	} else {
 		visited = append(visited, []int{ni, nj})
 	}
-
+	return next(visited, direction, rows, cols)
 }
 
 func has(visited [][]int, i, j int) bool {
