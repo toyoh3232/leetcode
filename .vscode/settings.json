@@ -3,7 +3,7 @@
         "go.mod": true,
         "**/.vscode": true
     },
-    "files.autoSave": "onFocusChange",
+    "files.autoSave": "off",
     "editor.fontLigatures": true,
     "editor.fontFamily": "'Fira Code', 'Cascadia Code', Consolas, 'Courier New', monospace",
     "terminal.integrated.shell.windows": "C:\\Windows\\System32\\wsl.exe",
