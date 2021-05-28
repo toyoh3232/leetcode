@@ -8,7 +8,7 @@ package p62
 
 // Test ...
 func Test() int {
-	m, n := 20, 10
+	m, n := 3, 3
 	return uniquePaths(m, n)
 }
 
@@ -41,12 +41,27 @@ func uniquePaths(m int, n int) int {
 			}
 		}
 	}
-	return 0
+	out := 1
+	for i := range a {
+		if a[i] == 1 {
+			continue
+		}
+		out = out * a[i]
+		for j := range b {
+			k, _ := get([]int{out}, b[j])
+			if k == 0 {
+				out = out / b[j]
+				b[j] = 1
+			}
+		}
+	}
+
+	return out
 }
 
 func get(a []int, b int) (int, int) {
 	for i := range a {
-		if a[i]%b == 0 {
+		if a[i]%b == 0 && b != 1 {
 			return i, a[i]
 		}
 	}
