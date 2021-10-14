@@ -8,19 +8,6 @@ import . "leetcode/structure"
  * [2] Add Two Numbers
  */
 
-// Test ...
-func Test() int {
-	l1 := &ListNode{Val: 5, Next: nil}
-
-	l2 := &ListNode{Val: 5, Next: nil}
-
-	l1.Print()
-	l2.Print()
-	addTwoNumbers(l1, l2).Print()
-
-	return 0
-}
-
 // @lc code=start
 /**
  * Definition for singly-linked list.
@@ -64,7 +51,6 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 	if carrier != 0 {
 		pre.Next = &ListNode{Val: carrier, Next: nil}
 	}
-
 	return l2o
 }
 
