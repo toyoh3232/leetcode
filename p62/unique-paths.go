@@ -6,12 +6,6 @@ package p62
  * [62] Unique Paths
  */
 
-// Test ...
-func Test() int {
-	m, n := 3, 3
-	return uniquePaths(m, n)
-}
-
 // @lc code=start
 func uniquePaths(m int, n int) int {
 	m, n = m-1, n-1

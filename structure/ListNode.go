@@ -9,8 +9,17 @@ type ListNode struct {
 }
 
 // NewList ...
-func NewList(initial int) *ListNode {
-	first := &ListNode{Val: initial}
+func NewList(vals ...int) *ListNode {
+	var first, cur *ListNode
+	for i, v := range vals {
+		if i == 0 {
+			first = &ListNode{v, nil}
+			cur = first
+			continue
+		}
+		cur.Next = &ListNode{v, nil}
+		cur = cur.Next
+	}
 	return first
 }
 

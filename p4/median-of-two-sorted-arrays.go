@@ -1,19 +1,10 @@
 package p4
 
-import "fmt"
-
 /*
  * @lc app=leetcode id=4 lang=golang
  *
  * [4] Median of Two Sorted Arrays
  */
-
-// Test ...
-func Test() {
-	a := []int{1, 5, 7, 8}
-	b := []int{8, 9, 10, 11}
-	fmt.Println(findMedianSortedArrays(a, b))
-}
 
 // @lc code=start
 func findMedianSortedArrays2(nums1 []int, nums2 []int) float64 {

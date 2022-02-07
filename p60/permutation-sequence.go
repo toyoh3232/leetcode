@@ -6,11 +6,6 @@ package p60
  * [60] Permutation Sequence
  */
 
-// Test ...
-func Test() string {
-	return getPermutation(1, 1)
-}
-
 // @lc code=start
 func getPermutation(n int, k int) string {
 	a := make([]int, n)

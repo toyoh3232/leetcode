@@ -8,15 +8,6 @@ import . "leetcode/structure"
  * [61] Rotate List
  */
 
-func Test() int {
-	l1 := NewList(0)
-	l1.Push(1).Push(2).Push(3)
-	l1.Print()
-	rotateRight(l1, 2)
-	l1.Print()
-	return 0
-}
-
 // @lc code=start
 /**
  * Definition for singly-linked list.

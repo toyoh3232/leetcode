@@ -6,11 +6,6 @@ package p10
  * [10] Regular Expression Matching
  */
 
-// Run ...
-func Run() {
-
-}
-
 // @lc code=start
 func isMatch(s string, p string) bool {
 	if len(p) == 0 {
